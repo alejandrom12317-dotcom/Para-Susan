@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Susan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #fdf0f4;
+            --card-bg: #ffffff;
+            --primary: #d87093;
+            --primary-hover: #b85073;
+            --text-dark: #4a4a4a;
+            --text-light: #7a7a7a;
+            --accent: #ffb6c1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            padding: 20px 15px 60px 15px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(216, 112, 147, 0.12);
+            text-align: center;
+        }
+
+        .photo-frame {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-top: 5px;
+        }
+
+        .cursive {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-top: 15px;
+        }
+
+        .counter-box {
+            background: #fff5f8;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+            border: 1px dashed var(--accent);
+        }
+
+        .counter-time {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            margin-top: 15px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .btn-toggle {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            box-shadow: 0 4px 10px rgba(216, 112, 147, 0.3);
+        }
+
+        .letter-content {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff8fa;
+            border-radius: 10px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .list-items {
+            text-align: left;
+            padding-left: 10px;
+            list-style: none;
+        }
+
+        .list-items li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+        }
+
+        .list-items li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        .voucher-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff0f5;
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .btn-voucher {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-voucher.used {
+            background: #ccc;
+            cursor: default;
+        }
+
+        .proposal-btns {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-yes, .btn-no {
+            padding: 12px 30px;
+            border-radius: 25px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-yes {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(216, 112, 147, 0.4);
+        }
+
+        .btn-no {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        #response-msg {
+            display: none;
+            margin-top: 20px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Portada -->
+    <div class="card">
+        <div class="photo-frame">
+            <img src="foto1.jpg" alt="Foto picnic">
+        </div>
+        <div class="cursive" style="font-size: 2.2rem;">Susan,</div>
+        <p style="margin: 5px 0 15px 0; font-style: italic;">por todo lo que somos.<br><strong>Te amo.</strong></p>
+        <div class="subtitle">CON CARIÑO</div>
+        <p style="font-weight: 600; margin-top: 5px;">Alejandro</p>
+        <p style="color: var(--primary); font-size: 0.8rem;">♥ Para siempre ♥</p>
+    </div>
+
+    <!-- Foto 2 & Contador -->
+    <div class="card">
+        <h2>Alejandro & Susan</h2>
+        <div class="photo-frame">
+            <img src="foto2.jpg" alt="Foto propuesta">
+        </div>
+        <div class="subtitle">Juntos desde hace</div>
+        <div class="counter-box">
+            <div class="counter-time" id="counter">Cargando...</div>
+        </div>
+    </div>
+
+    <!-- Foto 3 & Música YouTube -->
+    <div class="card">
+        <div class="photo-frame">
+            <img src="foto3.jpg" alt="Foto juntos">
+        </div>
+        <div class="subtitle" style="margin-top: 0;">NUESTRA CANCIÓN</div>
+        <p style="font-weight: 600; margin-bottom: 10px;">The Carpenters - Close to You</p>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/tT860rA_L3U" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Carta Desplegable -->
+    <div class="card">
+        <div class="subtitle" style="margin-top: 0;">MENSAJE PRIVADO</div>
+        <br>
+        <button class="btn-toggle" onclick="toggleLetter()">♥ ABRIR CARTA</button>
+        <div class="letter-content" id="letter">
+            "Cada día a tu lado se vuelve un recuerdo que voy a guardar para siempre. Gracias por construir este tiempo nuestro conmigo, a nuestra manera."
+            <br><br>
+            <strong>CON AMOR<br>Alejandro</strong>
+        </div>
+    </div>
+
+    <!-- Foto 4 & Lo que más amo -->
+    <div class="card">
+        <div class="photo-frame">
+            <img src="foto4.jpg" alt="Foto juntos mirador">
+        </div>
+        <h2>Lo que más amo de Susan</h2>
+        <ul class="list-items">
+            <li>Tu valentía para seguir tus sueños</li>
+            <li>Tu paciencia infinita conmigo</li>
+            <li>Tu risa contagiosa</li>
+            <li>El brillo en tus ojos cuando hablas de lo que amas</li>
+        </ul>
+    </div>
+
+    <!-- Vales de Amor -->
+    <div class="card">
+        <h2>Nuestros vales de amor</h2>
+        <p style="font-size: 0.8rem; color: var(--text-light); margin-bottom: 20px;">Canjéalo cuando quieras. Pero solo se puede usar una vez.</p>
+        
+        <div class="voucher-item"><span>Vale por un beso</span><button class="btn-voucher" onclick="useVoucher(this)">CANJEAR</button></div>
+        <div class="voucher-item"><span>Vale por un abrazo fuerte</span><button class="btn-voucher" onclick="useVoucher(this)">CANJEAR</button></div>
+        <div class="voucher-item"><span>Vale por un masaje</span><button class="btn-voucher" onclick="useVoucher(this)">CANJEAR</button></div>
+        <div class="voucher-item"><span>Vale por una cena</span><button class="btn-voucher" onclick="useVoucher(this)">CANJEAR</button></div>
+        <div class="voucher-item"><span>Vale por la película que elijas</span><button class="btn-voucher" onclick="useVoucher(this)">CANJEAR</button></div>
+        <div class="voucher-item"><span>Vale por un picnic en el parque</span><button class="btn-voucher" onclick="useVoucher(this)">CANJEAR</button></div>
+        <div class="voucher-item"><span>Vale por lavar los platos</span><button class="btn-voucher" onclick="useVoucher(this)">CANJEAR</button></div>
+        <div class="voucher-item"><span>Vale por cocinar la cena</span><button class="btn-voucher" onclick="useVoucher(this)">CANJEAR</button></div>
+        <div class="voucher-item"><span>Vale por una carta a mano</span><button class="btn-voucher" onclick="useVoucher(this)">CANJEAR</button></div>
+        <div class="voucher-item"><span>Vale por un deseo (casi) cualquiera</span><button class="btn-voucher" onclick="useVoucher(this)">CANJEAR</button></div>
+    </div>
+
+    <!-- Pregunta Final -->
+    <div class="card">
+        <div class="subtitle" style="margin-top: 0;">TENGO ALGO QUE PREGUNTARTE</div>
+        <h3 style="color: var(--primary); font-weight: 400; font-family: 'Playfair Display', serif;">¿Quieres seguir siendo enamorada por mí y demostrarle lo que la amo?</h3>
+        
+        <div class="proposal-btns" id="btn-group">
+            <button class="btn-yes" onclick="sayYes()">Sí</button>
+            <button class="btn-no" onclick="moveNo(this)">No</button>
+        </div>
+
+        <div id="response-msg">
+            ♥ ¡Dijiste que sí! ♥
+            <p style="font-size: 0.9rem; font-family: 'Montserrat', sans-serif; color: var(--text-dark);">24 DE AGOSTO DE 2026</p>
+            <p style="font-size: 0.8rem; font-family: 'Montserrat', sans-serif; color: var(--text-light);">Este momento queda guardado para siempre.</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Contador exacto mostrado en tu video (3 años, 6 meses y 5 días)
+    const startDate = new Date('2023-02-19T00:00:00');
+
+    function updateCounter() {
+        const now = new Date();
+        const diff = now - startDate;
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        const years = Math.floor(days / 365);
+        const remainingDays = days % 365;
+        const months = Math.floor(remainingDays / 30);
+        const finalDays = remainingDays % 30;
+
+        document.getElementById('counter').innerHTML = 
+            `${years} años, ${months} meses y ${finalDays} días<br>` +
+            `<span style="font-size: 1rem; color: #7a7a7a;">${hours}h ${minutes}m ${seconds}s</span>`;
+    }
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    function toggleLetter() {
+        const letter = document.getElementById('letter');
+        letter.style.display = (letter.style.display === "block") ? "none" : "block";
+    }
+
+    function useVoucher(btn) {
+        btn.innerText = "✓ CANJEADO";
+        btn.classList.add('used');
+        btn.disabled = true;
+    }
+
+    function sayYes() {
+        document.getElementById('btn-group').style.display = 'none';
+        document.getElementById('response-msg').style.display = 'block';
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    }
+
+    function moveNo(btn) {
+        btn.style.position = 'absolute';
+        btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+        btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+    }
+</script>
+
+</body>
+</html>
